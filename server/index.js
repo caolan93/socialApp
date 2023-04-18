@@ -34,3 +34,20 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+
+// ROUTES WITH FILES
+app.post("/auth/register", upload.single("picture", register));
+
+// MONGOOSE CONNECTION
+const PORT = process.env.PORT || 6001;
+mongoose
+  .connect(process.env.MONGOURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+  })
+  .catch((error) => {
+    console.log(`${error} Server error`);
+  });
